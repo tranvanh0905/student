@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "classCourse".
@@ -32,13 +33,10 @@ class classCourse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_no', 'status', 'created_at', 'updated_at'], 'required'],
-            [['student_id', 'status'], 'integer'],
+            [['class_no', 'status'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['class_no'], 'string', 'max' => 255],
             [['class_no'], 'unique'],
-            [['student_id'], 'unique'],
-            [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['student_id' => 'id']],
         ];
     }
 
@@ -57,6 +55,17 @@ class classCourse extends \yii\db\ActiveRecord
         ];
     }
 
+    public function get_created_at()
+    {
+        $this->created_at = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+        return $this;
+    }
+
+    public function get_updated_at()
+    {
+        $this->updated_at = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+        return $this;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -64,4 +73,5 @@ class classCourse extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'student_id']);
     }
+
 }

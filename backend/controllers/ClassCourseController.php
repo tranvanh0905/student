@@ -8,7 +8,7 @@ use backend\models\ClassCourseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * ClassCourseController implements the CRUD actions for ClassCourse model.
  */
@@ -20,6 +20,16 @@ class ClassCourseController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -66,7 +76,7 @@ class ClassCourseController extends Controller
     {
         $model = new ClassCourse();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->get_created_at()->get_updated_at()->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
