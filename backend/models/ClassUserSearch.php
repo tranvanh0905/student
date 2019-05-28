@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\ClassCourse;
+use backend\models\ClassUser;
 
 /**
- * ClassCourseSearch represents the model behind the search form of `backend\models\ClassCourse`.
+ * ClassUserSearch represents the model behind the search form of `backend\models\ClassUser`.
  */
-class ClassCourseSearch extends ClassCourse
+class ClassUserSearch extends ClassUser
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class ClassCourseSearch extends ClassCourse
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['class_no', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'user_id', 'class_id'], 'integer'],
+            [['date_start'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ClassCourseSearch extends ClassCourse
      */
     public function search($params)
     {
-        $query = ClassCourse::find();
+        $query = ClassUser::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +59,10 @@ class ClassCourseSearch extends ClassCourse
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'user_id' => $this->user_id,
+            'class_id' => $this->class_id,
+            'date_start' => $this->date_start,
         ]);
-
-        $query->andFilterWhere(['like', 'class_no', $this->class_no]);
 
         return $dataProvider;
     }

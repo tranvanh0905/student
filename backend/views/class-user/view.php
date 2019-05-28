@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\ClassCourse */
+/* @var $model backend\models\ClassUser */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Class Courses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Class Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="class-course-view">
+<div class="class-user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'class_no',
-            'status',
-            'created_at',
-            'updated_at',
+            'user_id',
+            'class_id',
+            'date_start',
         ],
     ]) ?>
 
